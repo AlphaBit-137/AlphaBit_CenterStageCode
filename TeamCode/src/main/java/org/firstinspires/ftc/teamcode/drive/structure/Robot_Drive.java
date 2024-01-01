@@ -1,13 +1,11 @@
 package org.firstinspires.ftc.teamcode.drive.structure;
 
-import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.teamcode.drive.Skeletal_Structures.Gyroscope;
-import org.firstinspires.ftc.teamcode.drive.autonomus.NoobAuto;
+import org.firstinspires.ftc.teamcode.drive.autonomus.DetectionTest;
 
 public class Robot_Drive {
 
@@ -22,7 +20,7 @@ public class Robot_Drive {
         this.gamepad = gamepad;
         csint.init(hwmap);
     }
-    NoobAuto auto = new NoobAuto();
+    DetectionTest auto = new DetectionTest();
 
     boolean firstTime = true;
     ElapsedTime timer = new ElapsedTime();
@@ -33,9 +31,6 @@ public class Robot_Drive {
 
     public void Run()
     {
-
-
-
         double rx = Range.clip(gamepad.right_stick_x * 1.1,-Limit,Limit);
         double y = -Range.clip(gamepad.left_stick_y,-Limit,Limit);
         double x = Range.clip(gamepad.left_stick_x,-Limit,Limit);
@@ -69,6 +64,19 @@ public class Robot_Drive {
         csint.FrontRight.setPower(x1);
         csint.FrontLeft.setPower(x4);
         csint.BackRight.setPower(x3);
+    }
+
+    public void frontRightPow(double p) {
+        csint.FrontRight.setPower(p);
+    }
+    public void backLeftPow(double p) {
+        csint.BackLeft.setPower(p);
+    }
+    public void backRightPow(double p) {
+        csint.BackRight.setPower(p);
+    }
+    public void frontLeftPow(double p) {
+        csint.FrontLeft.setPower(p);
     }
 
     public void goForward(int secs, double powa) {

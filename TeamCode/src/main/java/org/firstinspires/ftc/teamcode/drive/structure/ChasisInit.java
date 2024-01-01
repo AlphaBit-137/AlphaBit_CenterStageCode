@@ -43,8 +43,8 @@ public class ChasisInit {
 
         BackLeft.setDirection(DcMotorEx.Direction.REVERSE);
         FrontRight.setDirection(DcMotorEx.Direction.FORWARD);
-        FrontLeft.setDirection(DcMotorEx.Direction.REVERSE);
-        BackRight.setDirection(DcMotorEx.Direction.REVERSE);
+        FrontLeft.setDirection(DcMotorEx.Direction.FORWARD);
+        BackRight.setDirection(DcMotorEx.Direction.FORWARD);
 
     }
 

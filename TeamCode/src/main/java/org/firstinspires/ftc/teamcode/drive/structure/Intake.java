@@ -67,7 +67,7 @@ public class Intake {
         }
         else if(inversed)
         {
-            suck(-suck_power+0.2,-suck_power);
+            suck(-suck_power,-suck_power);
         }
         else {
             suck(0,0);

@@ -29,7 +29,7 @@ public class Claw {
         claw2.setPosition(closed_position2);
     }
 
-    boolean open = false;
+    public boolean open = false;
     public boolean toggle = true;
 
     public void Run()

@@ -9,6 +9,7 @@ public class Pid_Controller {
     boolean IsStarted = false;
 
     double timp;
+    double lastTimp;
 
     public double LastError = 0;
     public double IntegralSum = 0;
@@ -41,14 +42,9 @@ public class Pid_Controller {
             IntegralSum = 0;
         }
 
-        IntegralSum += error * timp;
+        IntegralSum += error * (timp-lastTimp);
 
-       double errorChange = (error - LastError);
-
-        currentFilterEstimate = (a * previousFilterEstimate) + (1-a) * errorChange;
-        previousFilterEstimate = currentFilterEstimate;
-
-       double derivative = currentFilterEstimate / timp;
+       double derivative = (error-LastError) / (timp-lastTimp);
 
         LastError = error;
 
@@ -56,6 +52,7 @@ public class Pid_Controller {
 
         Last_Reference = reference;
 
+        lastTimp = timp;
 
         return outpput;
     }

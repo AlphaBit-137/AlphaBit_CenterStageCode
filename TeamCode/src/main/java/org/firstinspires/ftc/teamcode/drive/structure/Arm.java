@@ -15,7 +15,6 @@ public class Arm {
 
     Gamepad Arm_Gamepad;
 
-    double ku=0.05;
     double Kp = 0.007;
     double Ki = 0;
     double Kd = 0.001;
@@ -49,7 +48,7 @@ public class Arm {
 
     boolean gpad=false;
 
-    public void init(HardwareMap ahwMap, Gamepad Arm_Gamepad) {
+    public Arm(HardwareMap ahwMap, Gamepad Arm_Gamepad) {
 
         this.Arm_Gamepad = Arm_Gamepad;
 
@@ -138,6 +137,18 @@ public class Arm {
             //lastPosition = ArmMotor1.MotorCurrentPosition();
 
 
+    }
+
+    public void simpleUpdate() {
+        if(Arm_Gamepad.right_bumper)
+        {
+            ArmMotor1.SetPower(pow);
+        }
+        else if(Arm_Gamepad.left_bumper)
+        {
+            ArmMotor1.SetPower(-pow);
+        }
+        else SetPower(0);
     }
 
     public void tuneUpdate(boolean gpad) {

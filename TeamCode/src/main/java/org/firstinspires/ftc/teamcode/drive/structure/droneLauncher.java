@@ -19,8 +19,8 @@ public class droneLauncher {
         launcher.setPosition(closed_pos);
     }
 
-    double closed_pos = 0.55;
-    double open_pos = 0.4;
+    double closed_pos = 0.75;
+    double open_pos = 0.475;
 
     boolean toggle = true;
     boolean open = false;

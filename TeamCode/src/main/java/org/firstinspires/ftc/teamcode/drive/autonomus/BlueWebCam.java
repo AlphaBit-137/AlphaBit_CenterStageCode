@@ -7,9 +7,9 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 
-public class WebCam {
+public class BlueWebCam {
     OpenCvCamera camera = null;
-    SimplePipeline pipe = new SimplePipeline();
+    BluePipeline pipe = new BluePipeline();
     double maxi;
 
     public double getLeftVal() {
