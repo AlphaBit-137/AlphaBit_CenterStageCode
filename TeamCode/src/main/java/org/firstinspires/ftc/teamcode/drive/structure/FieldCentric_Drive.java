@@ -10,7 +10,7 @@ public class FieldCentric_Drive {
 
     Gamepad gamepad;
 
-    ChasisInit csint = new ChasisInit();
+    ChasisInit csint;
 
     Gyroscope gyroscope = new Gyroscope();
 
@@ -22,11 +22,13 @@ public class FieldCentric_Drive {
 
         gyroscope.Init(hwmap);
 
-        csint.init(hwmap);
+        csint = new ChasisInit(hwmap);
     }
 
     public void Run()
     {
+
+        gyroscope.updateOrientation();
 
         double x = Range.clip(gamepad.left_stick_x * 1.1,-Limit,Limit);
         double y = Range.clip(-gamepad.left_stick_y,-Limit,Limit);

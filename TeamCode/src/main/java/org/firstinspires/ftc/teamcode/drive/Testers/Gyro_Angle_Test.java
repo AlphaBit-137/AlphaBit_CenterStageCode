@@ -77,7 +77,7 @@ public class Gyro_Angle_Test extends LinearOpMode {
 
                 double Motor_Power = (error < 0 ? -0.3 : 0.3);
 
-                CSI.setMotortPower(-Motor_Power,Motor_Power,-Motor_Power,Motor_Power);
+                CSI.setMotorPower(-Motor_Power,Motor_Power,-Motor_Power,Motor_Power);
 
 
                 error = degrees - Get_Angle();
@@ -86,7 +86,7 @@ public class Gyro_Angle_Test extends LinearOpMode {
                 telemetry.update();
             }
 
-            CSI.setMotortPower(0,0,0,0);
+            CSI.setMotorPower(0,0,0,0);
 
         }
 

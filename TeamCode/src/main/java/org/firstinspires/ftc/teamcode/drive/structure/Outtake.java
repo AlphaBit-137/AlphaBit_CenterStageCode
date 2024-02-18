@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-public class Intake {
+public class Outtake {
 
     DcMotorEx sucker1;
     DcMotorEx sucker2;
@@ -34,7 +34,7 @@ public class Intake {
     boolean toggle = true;
     boolean toggle2 = true;
 
-    public Intake(HardwareMap hwmap, Gamepad intake_gamepad)
+    public Outtake(HardwareMap hwmap, Gamepad intake_gamepad)
     {
         sucker1 = hwmap.get(DcMotorEx.class,"Sucker1");
         sucker2 = hwmap.get(DcMotorEx.class,"Sucker2");
@@ -68,21 +68,27 @@ public class Intake {
             toggle=true;
         }
 
-        if(intake_gamepad.b) {
-            if(toggle) { rolling=!rolling; toggle=false; }
-        }
-        else { toggle=true; }
-
         if(intake_gamepad.y) {
-            if(toggle2) { inversed=!inversed; toggle2=false;
+            if(toggle2) {
+                inversed=!inversed;
+                toggle2=false;
             }
         }
-        else { toggle2=true; }
+        else {
+            toggle2=true;
+        }
 
-        if(rolling) { suck(suck_power,suck_power); }
-        else if(inversed) { suck(-suck_power,-suck_power); }
-        else { suck(0,0); }
-
+        if(rolling)
+        {
+            suck(suck_power,suck_power);
+        }
+        else if(inversed)
+        {
+            suck(-suck_power,-suck_power);
+        }
+        else {
+            suck(0,0);
+        }/*
         if(intake_gamepad.dpad_left) {
             suck(suck_power, suck_power);
         }
@@ -91,7 +97,7 @@ public class Intake {
         }
         else {
             suck(0,0);
-        }
+        }*/
     }
 
     public void suck(double power1, double power2)

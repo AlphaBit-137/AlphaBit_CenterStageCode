@@ -20,6 +20,7 @@ public class Second extends LinearOpMode {
     Intake intake;
 
     Arm arm1;
+
     Slider slider;
 
     droneLauncher launcher;
@@ -28,19 +29,31 @@ public class Second extends LinearOpMode {
 
     Claw claw;
 
+    public double encoder_pos;
+
+    double Reference = 200;
+    double calculated_pow=0;
+    boolean manual=true;
+    boolean toggle=true;
+
+    double max_output=0.7;
+
+    static double Kp = 0.0025;
+    static double Ki = 0.0;
+    static double Kd = 0.001025; //0.0005
+
 
     @Override
     public void runOpMode() {
 
-        //drive = new Robot_Drive(hardwareMap,gamepad1);
+        drive = new Robot_Drive(hardwareMap,gamepad1);
 
-        //claw = new Claw(hardwareMap,gamepad1);
+        claw = new Claw(hardwareMap,gamepad1);
 
-        //intake = new Intake(hardwareMap , gamepad1);
+        launcher = new droneLauncher(hardwareMap,gamepad1);
 
-        //launcher = new droneLauncher(hardwareMap,gamepad1);
-
-        arm1=new Arm(hardwareMap,gamepad1);
+        arm1 = new Arm(hardwareMap,gamepad1);
+        armInit();
 
         //gyro.Init(hardwareMap);
 
@@ -53,17 +66,71 @@ public class Second extends LinearOpMode {
 
         while (opModeIsActive())
         {
-            //claw.Run();
-            //drive.Run();
-            arm1.simpleUpdate();
-            //arm2.update();
-            //launcher.Run();
-            //intake.Run();
-            //slider.Run();
-            //telemetry.addData("arm1 motor pos", arm1.getArmPos());
-            //telemetry.addData("slider motor pow", slider.getPower());
-            //gyro.updateOrientation();
+
+            armUpdate();
+            drive.Run();
+            claw.Run();
+            launcher.Run();
+
+            if(gamepad1.b) {
+                if(toggle) {
+                    toggle=false;
+                    manual=!manual;
+                }
+            }
+            else {
+                toggle=true;
+            }
+            if(gamepad1.dpad_up) {
+                Reference=2700;
+            }
+            else if(gamepad1.dpad_left) {
+                Reference=700;
+            }
+            else if(gamepad1.dpad_down) {
+                Reference=200;
+            }
+
+            telemetry.addData("arm pow", arm1.pow);
+            telemetry.addData("arm pos",arm1.getArmPos());
+
             telemetry.update();
         }
+    }
+
+    void armUpdate() {
+        if(gamepad1.left_bumper) {
+            arm1.SetPower(0.25);
+            Reference = arm1.getArmPos();
+        }
+        else if(gamepad1.right_bumper) {
+            arm1.SetPower(-0.25);
+            Reference = arm1.getArmPos();
+        }
+        else {
+            calculated_pow = -arm1.ArmMotor1.getPidPower(Reference);
+            //if(calculated_pow > max_output) calculated_pow = max_output;
+            //else if(calculated_pow < -max_output) calculated_pow = -max_output;
+            if(manual) {
+                arm1.SetPower(0);
+                //calculated_pow = -arm.ArmMotor1.getPidPower(Reference);
+            }
+            else {
+                //calculated_pow = -arm.ArmMotor1.getPidPower(Reference);
+                arm1.SetPower(calculated_pow);
+            }
+        }
+    }
+
+    void armInit() {
+        arm1.SetPidCoefs(Kp,Ki,Kd);
+    }
+
+    double addons(double pow)
+    {
+
+        if(pow > max_output)pow = max_output;
+        else if(pow < -max_output)pow = -max_output;
+        return pow;
     }
 }

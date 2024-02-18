@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class Motor_Skeleton {
 
-    DcMotorEx ThisMotor;
+    public DcMotorEx ThisMotor;
 
     public Motor_Skeleton(DcMotorEx ThisMotor){
         this.ThisMotor = ThisMotor;
@@ -24,17 +24,21 @@ public class Motor_Skeleton {
         isBusy2,
         notBusy
     }
+    int multiplier=1;
 
     BusyStates bs = BusyStates.notBusy;
 
     Pid_Controller pid;
     MPid_Controller mpid;
 
-    public void init(HardwareMap ahwMap,String MotorName,boolean IsReversed,boolean using_encoders) {
+    public void init(HardwareMap ahwMap,String MotorName,boolean IsReversed,boolean using_encoders,int multiplier) {
 
         ThisMotor = ahwMap.get(DcMotorEx.class, MotorName);
 
         ThisMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+
+        this.multiplier=multiplier;
 
         RUN_WITH_ENCODERS(using_encoders);
 
@@ -46,7 +50,7 @@ public class Motor_Skeleton {
 
     public double MotorCurrentPosition()
     {
-        return ThisMotor.getCurrentPosition();
+        return multiplier*ThisMotor.getCurrentPosition();
     }
 
     public void SetPower(double power)
@@ -54,7 +58,7 @@ public class Motor_Skeleton {
         ThisMotor.setPower(power);
     }
 
-    public double GetPower(){return ThisMotor.getPower();}
+    public double GetPower() { return ThisMotor.getPower(); }
 
     public void SetVelocity(double velocity)
     {
@@ -120,9 +124,9 @@ public class Motor_Skeleton {
         ThisMotor.setPower(power);
     }
 
-    public double returnMpidPower(double reference)
+    public double returnMpidPower(double reference, double sign)
     {
-        return mpid.returnPower(reference,MotorCurrentPosition(), GetVelocity());
+        return mpid.returnPower(sign*reference,sign*MotorCurrentPosition(), sign * GetVelocity());
     }
 
     public void setMinimum(double minimum)

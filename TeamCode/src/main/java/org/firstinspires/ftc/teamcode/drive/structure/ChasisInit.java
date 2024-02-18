@@ -18,7 +18,7 @@ public class ChasisInit {
 
     HardwareMap hwMap = null;
 
-    public void init(HardwareMap ahwMap){
+    public ChasisInit(HardwareMap ahwMap){
 
         hwMap = ahwMap;
 
@@ -43,12 +43,12 @@ public class ChasisInit {
 
         BackLeft.setDirection(DcMotorEx.Direction.REVERSE);
         FrontRight.setDirection(DcMotorEx.Direction.FORWARD);
-        FrontLeft.setDirection(DcMotorEx.Direction.FORWARD);
+        FrontLeft.setDirection(DcMotorEx.Direction.REVERSE);
         BackRight.setDirection(DcMotorEx.Direction.FORWARD);
 
     }
 
-        public void  setMotortPower (double BackLeftPower ,double FrontRightPower,double FrontLeftPower,double BackRightPower)
+        public void  setMotorPower (double BackLeftPower ,double FrontRightPower,double FrontLeftPower,double BackRightPower)
     {
         BackLeft.setPower(BackRightPower);
         FrontRight.setPower(FrontRightPower);

@@ -11,19 +11,15 @@ public class Robot_Drive {
 
     Gamepad gamepad;
 
-    ChasisInit csint = new ChasisInit();
+    ChasisInit csint;
 
     public double Limit = 1;
 
     public Robot_Drive(HardwareMap hwmap, Gamepad gamepad)
     {
         this.gamepad = gamepad;
-        csint.init(hwmap);
+        csint = new ChasisInit(hwmap);
     }
-    DetectionTest auto = new DetectionTest();
-
-    boolean firstTime = true;
-    ElapsedTime timer = new ElapsedTime();
 
     public boolean Chose;
     public boolean Chose2;
@@ -57,8 +53,6 @@ public class Robot_Drive {
         MS(Drive1, Drive2, Drive3, Drive4);
     }
 
-
-
     public void MS(double x1, double x2, double x3, double x4){
         csint.BackLeft.setPower(x2);
         csint.FrontRight.setPower(x1);
@@ -78,31 +72,5 @@ public class Robot_Drive {
     public void frontLeftPow(double p) {
         csint.FrontLeft.setPower(p);
     }
-
-    public void goForward(int secs, double powa) {
-        timer.reset();
-        while(timer.seconds()<secs && auto.opModeIsActive()) {
-            MS(powa,powa,powa,powa);
-        }
-        MS(0,0,0,0);
-    }
-    public void turnRight(int secs, double powa) {
-        timer.reset();
-        while(timer.seconds()<secs && auto.opModeIsActive()) {
-            MS(-powa,powa,-powa,powa);
-        }
-        MS(0,0,0,0);
-    }
-    public void turnLeft(int secs, double powa) {
-        timer.reset();
-        while(timer.seconds()<secs && auto.opModeIsActive()) {
-            MS(powa,-powa,powa,-powa);
-        }
-        MS(0,0,0,0);
-    }
-
-
-
-
 
 }

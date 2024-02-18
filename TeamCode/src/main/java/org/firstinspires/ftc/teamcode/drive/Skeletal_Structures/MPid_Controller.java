@@ -13,8 +13,8 @@ public class MPid_Controller {
 
     public boolean IsStarted = false;
 
-    double maxAccel = 0.0;
-    double maxVel = 0.0;
+    double maxAccel = 250.0;
+    double maxVel = 250.0;
 
     double IntegralSum = 0.0;
     double LastError = 0.0;

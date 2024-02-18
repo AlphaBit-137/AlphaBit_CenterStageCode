@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.drive.Skeletal_Structures.Motor_Skeleton;
 
-public class Slider {
+public class Slider2 {
 
     double Kp = 0.01;
     double Kd = 0;
@@ -21,7 +21,7 @@ public class Slider {
 
     public Motor_Skeleton slider_motor = new Motor_Skeleton(slider);
 
-    public Slider(HardwareMap hwmap , Gamepad slider_gamepad)
+    public Slider2(HardwareMap hwmap , Gamepad slider_gamepad)
     {
         slider_motor.init(hwmap,"Slider",false,true,1);
 
@@ -64,13 +64,13 @@ public class Slider {
         }
 
 
-         if(slider_gamepad.dpad_up)
+        if(slider_gamepad.dpad_up)
         {
-             reference = up_Position;
+            reference = up_Position;
         }
         else if(slider_gamepad.dpad_down)
         {
-              reference = down_position;
+            reference = down_position;
         }
     }
 
@@ -88,8 +88,8 @@ public class Slider {
     public void SetToReference(double reference1)
     {
         encoder_position = slider_motor.MotorCurrentPosition();
-         reference = reference1;
-         SetPidPower();
+        reference = reference1;
+        SetPidPower();
     }
 
     public void SetPower(double pow) {

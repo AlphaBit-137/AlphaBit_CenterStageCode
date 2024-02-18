@@ -9,7 +9,6 @@ public class Pid_Controller {
     boolean IsStarted = false;
 
     double timp;
-    double lastTimp;
 
     public double LastError = 0;
     public double IntegralSum = 0;
@@ -28,32 +27,24 @@ public class Pid_Controller {
 
 
     double a = 0.9;
-  double  previousFilterEstimate = 0;
-  double  currentFilterEstimate = 0;
+    double  previousFilterEstimate = 0;
+    double  currentFilterEstimate = 0;
 
     public double returnPower(double reference, double state){
-
         timp = returnTimer();
-
         double error = reference - state;
-
         if(Last_Reference != reference)
         {
             IntegralSum = 0;
         }
-
-        IntegralSum += error * (timp-lastTimp);
-
-       double derivative = (error-LastError) / (timp-lastTimp);
-
+        IntegralSum += error * timp;
+        double errorChange = (error - LastError);
+        currentFilterEstimate = (a * previousFilterEstimate) + (1-a) * errorChange;
+        previousFilterEstimate = currentFilterEstimate;
+        double derivative = currentFilterEstimate / timp;
         LastError = error;
-
         double outpput = (error * Kp) + (derivative * Kd) + (IntegralSum * Ki);
-
         Last_Reference = reference;
-
-        lastTimp = timp;
-
         return outpput;
     }
 

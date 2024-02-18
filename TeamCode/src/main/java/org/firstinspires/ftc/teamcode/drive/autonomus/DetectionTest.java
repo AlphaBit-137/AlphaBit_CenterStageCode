@@ -6,18 +6,39 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 @Autonomous
 public class DetectionTest extends LinearOpMode {
 
-    RedWebCam cam = new RedWebCam();
+    RedWebCam rcam = new RedWebCam();
+    //BlueWebCam bcam = new BlueWebCam();
+    String desiredColor= "red";
 
     @Override
     public void runOpMode() throws InterruptedException {
 
-        cam.init(hardwareMap);
+        rcam.init(hardwareMap);
+        //bcam.init(hardwareMap);
 
         while(opModeInInit()) {
-            telemetry.addData("autoCase",cam.getAutoCase());
-            telemetry.addData("leftAvg", cam.getLeftVal());
-            telemetry.addData("middleAvg", cam.getMiddleVal());
-            telemetry.addData("rightAvg", cam.getRightVal());
+            /*if(gamepad1.b) {
+                if(desiredColor=="red") {
+                    desiredColor="blue";
+                }
+                else {
+                    desiredColor="red";
+                }
+            }*/
+
+            if(desiredColor=="red") {
+                telemetry.addData("autoCase",rcam.getAutoCase());
+                telemetry.addData("leftAvg", rcam.getLeftVal());
+                telemetry.addData("middleAvg", rcam.getMiddleVal());
+                telemetry.addData("rightAvg", rcam.getRightVal());
+            }
+            else {
+                /*telemetry.addData("autoCase",bcam.getAutoCase());
+                telemetry.addData("leftAvg", bcam.getLeftVal());
+                telemetry.addData("middleAvg", bcam.getMiddleVal());
+                telemetry.addData("rightAvg", bcam.getRightVal());*/
+            }
+            telemetry.addData("color search",desiredColor);
             telemetry.update();
         }
 
